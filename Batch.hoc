@@ -170,11 +170,11 @@ FF2.pp.start=564
 load_file("scale_ep_thresh.hoc")
 ///////////////////////////////////////////////////////////////
 //Total time for one run
-tstop=1500
+tstop=10 // orig 1500
 // time increment
 dt=0.05
 // Number of runs
-NRUN = 26
+NRUN = 1 // orig 26
 proc runonce(){
 //
 init()
