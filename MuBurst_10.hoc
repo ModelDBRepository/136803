@@ -1,0 +1,45 @@
+objref AlphaFF[150]
+objref AlphaFB[150]
+objref GaussRand
+GaussRand=new Random()////////////////////////////////////////////////////////
+proc make_MuBursts(){local i 
+// Usage: make_MuBursts(start-time-variance)// Creates 150 feed-forward and  feed-back sources
+// 10 feed-forward and 10 feed-back at every 100ms
+// // Feed-Forward
+for i=0,149{ 
+AlphaFF[i] = new FeedX()
+AlphaFF[i].pp.noise=0AlphaFF[i].pp.number=2 //CHANGED THIS!!
+AlphaFF[i].pp.interval = 10
+AlphaFF[i].pp.start = 50
+}
+
+for i=0,9{AlphaFF[i].pp.number = 0} // Not Used// Start at 150ms.
+
+for i=10,19{AlphaFF[i].pp.start=GaussRand.normal(150,$1)}
+for i=20,29{AlphaFF[i].pp.start= GaussRand.normal(250,$1)}
+for i=30,39{AlphaFF[i].pp.start= GaussRand.normal(350,$1)}
+for i=40,49{AlphaFF[i].pp.start= GaussRand.normal(450,$1)}
+for i=50,59{AlphaFF[i].pp.start= GaussRand.normal(550,$1)} 
+for i=60,69{AlphaFF[i].pp.start= GaussRand.normal(650,$1)}
+for i=70,79{AlphaFF[i].pp.start= GaussRand.normal(750,$1)}
+for i=80,89{AlphaFF[i].pp.start= GaussRand.normal(850,$1)}
+for i=90,99{AlphaFF[i].pp.start= GaussRand.normal(950,$1)}for i=100,109{AlphaFF[i].pp.start= GaussRand.normal(1050,$1)}for i=110,119{AlphaFF[i].pp.start= GaussRand.normal(1150,$1)}for i=120,129{AlphaFF[i].pp.start= GaussRand.normal(1250,$1)}for i=130,139{AlphaFF[i].pp.start= GaussRand.normal(1350,$1)}for i=140,149{AlphaFF[i].pp.start= GaussRand.normal(1450,$1)}
+//// Feedback
+for i=0,149{ 
+AlphaFB[i] = new FeedX()
+AlphaFB[i].pp.noise=0AlphaFB[i].pp.number=2 //THIS IS STILL 2 - CHANGE IT?
+AlphaFB[i].pp.interval = 10
+AlphaFB[i].pp.start = 50
+}
+for i=0,9{AlphaFB[i].pp.number = 0} // Not Used// Start at 150ms.
+
+for i=10,19{AlphaFB[i].pp.start=GaussRand.normal(150,$1)}
+for i=20,29{AlphaFB[i].pp.start= GaussRand.normal(250,$1)}
+for i=30,39{AlphaFB[i].pp.start= GaussRand.normal(350,$1)}
+for i=40,49{AlphaFB[i].pp.start= GaussRand.normal(450,$1)}
+for i=50,59{AlphaFB[i].pp.start= GaussRand.normal(550,$1)} 
+for i=60,69{AlphaFB[i].pp.start= GaussRand.normal(650,$1)}
+for i=70,79{AlphaFB[i].pp.start= GaussRand.normal(750,$1)}
+for i=80,89{AlphaFB[i].pp.start= GaussRand.normal(850,$1)}
+for i=90,99{AlphaFB[i].pp.start= GaussRand.normal(950,$1)}for i=100,109{AlphaFB[i].pp.start= GaussRand.normal(1050,$1)}for i=110,119{AlphaFB[i].pp.start= GaussRand.normal(1150,$1)}for i=120,129{AlphaFB[i].pp.start= GaussRand.normal(1250,$1)}for i=130,139{AlphaFB[i].pp.start= GaussRand.normal(1350,$1)}for i=140,149{AlphaFB[i].pp.start= GaussRand.normal(1450,$1)}}// For implementing stochastic interval// for //i=5,9{AlphaFF[i].pp.start=GaussRand.interval=GuassRand.normal($2,$3)}
+
