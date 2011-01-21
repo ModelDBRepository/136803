@@ -1,6 +1,11 @@
 // 2D init file
 X_DIM = 10 // number of Pyramidal cells along the X dimension 
 Y_DIM = 10 // number of Pyramidal cells along the Y dimension
+load_file("parlib.hoc")
+
+N_TYPE = 4 // number of cell types
+{load_file("parlib.hoc")} // create pc and all the parallel specific functions, etc.
+declare_gids()
 
 Tfactor=0.0002
 Ttau=0.0
@@ -10,8 +15,9 @@ Htau=0.003
 FSx=4 // Coordinates for *all* feeds 
 FSy=4
 
-load_file("sj10-cortex.hoc")
-load_file("wiring_proc_2Dv2.hoc")
+{load_file("sj10-cortex.hoc")}
+want_all_spikes()
+{load_file("wiring_proc_2Dv2.hoc")}
 
 /*
 load_file("noise2D_V2.hoc") 
@@ -22,13 +28,13 @@ UnoiseIPL2(-0.3,0.3)
 */
 
 // Intra-cortical wiring
-load_file("wiring-SmlFeed-3_7.hoc")
+{load_file("wiring-SmlFeed-3_7.hoc")}
 //----------------------------------------
 // Mu timing
-load_file("MuBurst_10.hoc")
+{load_file("MuBurst_10.hoc")}
 //----------------------------------------
 // Mu weights
-load_file("E-FFFBx_fixed_10.hoc")
+{load_file("E-FFFBx_fixed_10.hoc")}
 //----------------------------------------
 // Evoked signal below
 
@@ -40,6 +46,7 @@ load_file("E-FFFBx_fixed_10.hoc")
 objref f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16
 objref PL5rest,PL2rest,MAR,HCAT,MCAT,HCA,MCA,PL5CAI
 objref HHH,MHH,NHH,NKCA,NKM,PL5_DPL,PL2_DPL,PL5_Q
+{
 f1 = new File()
 {f1.ropen("./STATES/PL5_Rest.dat")}
 PL5rest = new Vector()
@@ -121,7 +128,7 @@ f16 = new File()
 PL5_Q = new Vector()
 NumF16=PL5_Q.scanf(f16,1,1)
 f16.close()
-
+}
 // Redefine init() to use those voltages & state variables
 
 proc init(){ local i,j,Vnum,v2num,DPnum
@@ -167,7 +174,7 @@ FF2 = new FeedX() // Thalamic input (Feed-forward)
 FF2.pp.number=1
 FF2.pp.start=564
 // and connect it
-load_file("scale_ep_thresh.hoc")
+{load_file("scale_ep_thresh.hoc")}
 ///////////////////////////////////////////////////////////////
 //Total time for one run
 tstop=10 // orig 1500
@@ -197,11 +204,11 @@ for i=0, NRUN-1{ runonce() //increments the evoked response starttime each run
 FF.pp.start = FF.pp.start + 3.85
 FB.pp.start = FB.pp.start + 3.85
 FF2.pp.start = FF2.pp.start + 3.85
-print(i)}
+if (pc.id == 0) print(i)}
 wopen()
 }
 
 //
 runit()
 
-
+spikeout()

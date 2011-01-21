@@ -547,7 +547,6 @@ netcon.weight = $5 netcon.delay = $6 netcon.threshold = $7
 if (( $4 > 3) || ($3 < 0)){ print "Receptor Type not supported" }
 }
 
-
 //        Create a 2-D grid of cells
 
 XD = X_DIM - 1
@@ -557,10 +556,10 @@ objref PL5[X_DIM][Y_DIM]
 objref PL2[X_DIM][Y_DIM]
 for i=0,XD{
 for j=0,YD{
-PL5[i][j] = new Layer5_pyr()
-PL5[i][j].position(i*100,0,j*100)
-PL2[i][j] = new Layer2_pyr()
-PL2[i][j].position(i*100,535,j*100)
+PL5[i][j] = create_cell("new Layer5_pyr()", PL5_type, i, j)
+if (PL5[i][j] != nil) PL5[i][j].position(i*100,0,j*100)
+PL2[i][j] = create_cell("new Layer2_pyr()", PL2_type, i, j)
+if (PL2[i][j] != nil) PL2[i][j].position(i*100,535,j*100)
 } }
 
 //
@@ -593,8 +592,8 @@ proc I_zig_zag(){local x, y, offset
 offset = 0
 for y=0,YD{
 for x=offset,XD{
-IPL2[x][y] = new Inhib()
-IPL5[x][y] = new Inhib()
+IPL2[x][y] = create_cell("new Inhib()", IPL2_type, x, y)
+IPL5[x][y] = create_cell("new Inhib()", IPL5_type, x, y)
 x=x+$1 }
 if (offset==0) {offset=1} else {offset=0}
 } }
@@ -604,7 +603,7 @@ I_zig_zag(2)
 /////////////////////////////////////
 /////////////////////////////////////
 // DIPOLE _________________________________________________________
-load_file("dipole.hoc")
+{load_file("dipole.hoc")}
 
 
 objref dipoleL5, dipoleL2
