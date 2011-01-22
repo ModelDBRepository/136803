@@ -522,25 +522,30 @@ objref netcon
 
 /////////////////////////////////////
 ///////The Network Constructor/////////////
+// replaced by parallel version below
 proc rconnect(){
 // usage:       rconnect(source-cell, target-cell, target-section, rtype,
 // weight, delay, threshold )
 // rtype= 0=AMPA ||| 1=NMDA ||| 2=GABAa ||| 3= GABAb
 // -----------------------------------------------------------------------
 
-if ( $4 == 0){ $o1.connect2target($o2.ampa[$3].s, netcon)
+if ( $4 == 0){ //$o1.connect2target($o2.ampa[$3].s, netcon)
+	netcon = pc.gid_connect($1, $o2.ampa[$3].s)
 netcon.weight = $5 netcon.delay = $6 netcon.threshold = $7
  AMPAconnects.append(netcon) }
 
-if ( $4 == 1){ $o1.connect2target($o2.nmda[$3].s, netcon)
+if ( $4 == 1){ //$o1.connect2target($o2.nmda[$3].s, netcon)
+	netcon = pc.gid_connect($1, $o2.nmda[$3].s)
 netcon.weight = $5 netcon.delay = $6 netcon.threshold = $7
  NMDAconnects.append(netcon) }
 
-if ( $4 == 2){ $o1.connect2target($o2.gabaa[$3].s, netcon)
+if ( $4 == 2){ //$o1.connect2target($o2.gabaa[$3].s, netcon)
+	netcon = pc.gid_connect($1, $o2.gabaa[$3].s)
 netcon.weight = $5 netcon.delay = $6 netcon.threshold = $7
  GABAAconnects.append(netcon) }
 
-if ( $4 == 3){ $o1.connect2target($o2.gabab[$3].s, netcon)
+if ( $4 == 3){ //$o1.connect2target($o2.gabab[$3].s, netcon)
+	netcon = pc.gid_connect($1, $o2.gabab[$3].s)
 netcon.weight = $5 netcon.delay = $6 netcon.threshold = $7
  GABABconnects.append(netcon) }
 

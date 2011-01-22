@@ -13,14 +13,15 @@ proc FeedtoV(){ local weight,delay, distX, distY, distance, preX, preY, postX, p
 preX=FSx
 preY=FSy
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(PL5_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
     weight = $3 * exp( -(distance^2) / ( $4^2) )
     delay = $5 * 1 / (exp( -(distance^2) / ( $6^2) ) )
 
-       rconnect($o7, PL5[postX][postY], $1, $2, weight, delay, 0) 
+//       rconnect($o7, PL5[postX][postY], $1, $2, weight, delay, 0) 
+       rconnect($7, PL5[postX][postY], $1, $2, weight, delay, 0) 
 } } }
 ///////////////////////////////////////////////////////////
 proc FeedtoII(){ local weight,delay, distX, distY, distance, preX, preY, postX, postY
@@ -28,14 +29,15 @@ proc FeedtoII(){ local weight,delay, distX, distY, distance, preX, preY, postX, 
 preX=FSx
 preY=FSy
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(PL2_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
     weight = $3 * exp( -(distance^2) / ( $4^2) )
     delay = $5 * 1 / (exp( -(distance^2) / ( $6^2) ) )
 
-       rconnect($o7, PL2[postX][postY], $1, $2, weight, delay, 0) 
+//       rconnect($o7, PL2[postX][postY], $1, $2, weight, delay, 0) 
+       rconnect($7, PL2[postX][postY], $1, $2, weight, delay, 0) 
 } } }
 
 //////////////////////////////////////////////////////////
@@ -50,15 +52,16 @@ proc FeedtoIL5(){ local weight,delay, distX, distY, distance, preX, preY, postX,
 preX=FSx
 preY=FSy
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(IPL5_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
     weight = $2 * exp( -(distance^2) / ( $3^2) )
     delay = $4 * 1 / (exp( -(distance^2) / ( $5^2) ) )
 
-if (object_id(IPL5[postX][postY])   ){
-       rconnect($o6, IPL5[postX][postY], 0, $1, weight, delay, 0) }
+//if (object_id(IPL5[postX][postY])   ){
+//       rconnect($o6, IPL5[postX][postY], 0, $1, weight, delay, 0) }
+       rconnect($6, IPL5[postX][postY], 0, $1, weight, delay, 0)
 } } }
 ///////////////
 proc FeedtoIL2(){ local weight,delay, distX, distY, distance, preX, preY, postX, postY
@@ -72,7 +75,7 @@ proc FeedtoIL2(){ local weight,delay, distX, distY, distance, preX, preY, postX,
 preX=FSx
 preY=FSy
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(IPL2_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
@@ -80,8 +83,9 @@ preY=FSy
     delay = $4 * 1 / (exp( -(distance^2) / ( $5^2) ) )
 
 
-if (object_id(IPL2[postX][postY])   ){
-       rconnect($o6, IPL2[postX][postY], 0, $1, weight, delay, 0) }
+//if (object_id(IPL2[postX][postY])   ){
+//       rconnect($o6, IPL2[postX][postY], 0, $1, weight, delay, 0) }
+       rconnect($6, IPL2[postX][postY], 0, $1, weight, delay, 0)
 } } }
 
 //////////////////////////////////////////
@@ -94,14 +98,16 @@ proc VtoII(){ local weight, delay, distX, distY, distance, preX, preY, postX, po
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(PL2_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
     weight = $1 * exp( -(distance^2) / ( $2^2) )
     delay = $5 * 1 / (exp( -(distance^2) / ( $6^2) ) )
 
-      rconnect(PL5[preX][preY], PL2[postX][postY], $3, $4, weight, delay, 0) } } } } }
+//      rconnect(PL5[preX][preY], PL2[postX][postY], $3, $4, weight, delay, 0)
+      rconnect(type2gid(PL5_type, preX, preY), PL2[postX][postY], $3, $4, weight, delay, 0)
+} } } } }
 
 proc VtoV(){ local weight, delay, distX, distY, distance, preX, preY, postX, postY
 // Connects Layer V to Layer V Pyramidals
@@ -111,7 +117,7 @@ proc VtoV(){ local weight, delay, distX, distY, distance, preX, preY, postX, pos
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(PL5_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
@@ -120,7 +126,9 @@ for preX=0,XD{
 
 if ((preX == postX) && (preY == postY)){weight = 0}
 
-       rconnect(PL5[preX][preY], PL5[postX][postY], $3, $4, weight, delay, 0) } } } } }
+//       rconnect(PL5[preX][preY], PL5[postX][postY], $3, $4, weight, delay, 0)
+       rconnect(type2gid(PL5_type, prex, preY), PL5[postX][postY], $3, $4, weight, delay, 0)
+} } } } }
 
 
 proc IItoV(){ local weight, delay, distX, distY, distance, preX, preY, postX, postY
@@ -131,7 +139,7 @@ proc IItoV(){ local weight, delay, distX, distY, distance, preX, preY, postX, po
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(PL5_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
@@ -139,7 +147,9 @@ for preX=0,XD{
     delay = $5 * 1 / (exp( -(distance^2) / ( $6^2) ) )
 
 
-       rconnect(PL2[preX][preY], PL5[postX][postY], $3, $4, weight, delay, 0) } } } } }
+//       rconnect(PL2[preX][preY], PL5[postX][postY], $3, $4, weight, delay, 0)
+       rconnect(type2gid(PL2_type, preX, preY), PL5[postX][postY], $3, $4, weight, delay, 0)
+} } } } }
 
 proc IItoII(){ local weight, delay, distX, distY, distance, preX, preY, postX, postY
 // Connects Layer II/III to Layer II/III Pyramidals
@@ -149,7 +159,7 @@ proc IItoII(){ local weight, delay, distX, distY, distance, preX, preY, postX, p
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(PL2_type, postX, postY)){
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
@@ -159,7 +169,9 @@ for preX=0,XD{
 if ((preX == postX) && (preY == postY)){weight = 0}
 
 
-       rconnect(PL2[preX][preY], PL2[postX][postY], $3, $4, weight, delay, 0) } } } } }
+//       rconnect(PL2[preX][preY], PL2[postX][postY], $3, $4, weight, delay, 0)
+       rconnect(type2gid(PL2_type, preX, preY), PL2[postX][postY], $3, $4, weight, delay, 0)
+} } } } }
 
 //////////////////////////////////////////
 // Inhibitory to Pyramidal connections 
@@ -175,15 +187,16 @@ proc IL5toV(){ local weight,delay, distX, distY, distance, preX, preY, postX, po
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(PL5_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
     weight = $3 * exp( -(distance^2) / ( $4^2) )
     delay = $5 * 1 / (exp( -(distance^2) / ( $6^2) ) )
 
-if (object_id(IPL5[preX][preY])   ){ // *****// if presynaptic object exists then...
-       rconnect(IPL5[preX][preY], PL5[postX][postY], $1, $2, weight, delay, 0) }
+//if (object_id(IPL5[preX][preY])   ){ // *****// if presynaptic object exists then...
+//       rconnect(IPL5[preX][preY], PL5[postX][postY], $1, $2, weight, delay, 0) }
+       rconnect(type2gid(IPL5_type, preX, preY), PL5[postX][postY], $1, $2, weight, delay, 0)
 } } } } }
 //////////////////////////////////////////////////////////
 proc IL2toV(){ local weight,delay, distX, distY, distance, preX, preY, postX, postY
@@ -197,15 +210,16 @@ proc IL2toV(){ local weight,delay, distX, distY, distance, preX, preY, postX, po
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(PL5_type, postX, postY)){
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
     weight = $3 * exp( -(distance^2) / ( $4^2) )
     delay = $5 * 1 / (exp( -(distance^2) / ( $6^2) ) )
 
-if (object_id(IPL2[preX][preY])   ){ // *****// if presynaptic object exists then...
-       rconnect(IPL2[preX][preY], PL5[postX][postY], $1, $2, weight, delay, 0) }
+//if (object_id(IPL2[preX][preY])   ){ // *****// if presynaptic object exists then...
+//       rconnect(IPL2[preX][preY], PL5[postX][postY], $1, $2, weight, delay, 0) }
+       rconnect(type2gid(IPL2_type, preX, preY), PL5[postX][postY], $1, $2, weight, delay, 0)
 } } } } }
 //////////////////////////////////////////////
 proc IL2toII(){ local weight,delay, distX, distY, distance, preX, preY, postX, postY
@@ -219,15 +233,16 @@ proc IL2toII(){ local weight,delay, distX, distY, distance, preX, preY, postX, p
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(PL2_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
     weight = $3 * exp( -(distance^2) / ( $4^2) )
     delay = $5 * 1 / (exp( -(distance^2) / ( $6^2) ) )
 
-if (object_id(IPL2[preX][preY])   ){ // *****// if presynaptic object exists then...
-       rconnect(IPL2[preX][preY], PL2[postX][postY], $1, $2, weight, delay, 0) }
+//if (object_id(IPL2[preX][preY])   ){ // *****// if presynaptic object exists then...
+//       rconnect(IPL2[preX][preY], PL2[postX][postY], $1, $2, weight, delay, 0) }
+       rconnect(type2gid(IPL2_type, preX, preY), PL2[postX][postY], $1, $2, weight, delay, 0)
 } } } } }
 //////////////////////////////////////////
 // Inhibitory to inhibitory
@@ -259,7 +274,7 @@ proc IL5toIL5(){ local preX, preY, postX, postY, distX, distY, distance, weight,
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(IPL5_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
@@ -267,8 +282,9 @@ for preX=0,XD{
     delay = $3 * 1 / (exp( -(distance^2) / ( $4^2) ) )
 if ((preX == postX) && (preY == postY)){weight = 0}
 
-if ( object_id(IPL5[preX][preY]) && object_id(IPL5[postX][postY]) ){
-          rconnect(IPL5[preX][preY],IPL5[postX][postY],0,$5,weight,delay,0)}
+//if ( object_id(IPL5[preX][preY]) && object_id(IPL5[postX][postY]) ){
+//          rconnect(IPL5[preX][preY],IPL5[postX][postY],0,$5,weight,delay,0)}
+          rconnect(type2gid(IPL5_type, preX, preY),IPL5[postX][postY],0,$5,weight,delay,0)
 } } } } }
 
 
@@ -281,15 +297,16 @@ proc VtoIL5(){ local preX, preY, postX, postY, distX, distY, distance, weight, d
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(IPL5_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
     weight = $1 * exp( -(distance^2) / ( $2^2) )
     delay = $3 * 1 / (exp( -(distance^2) / ( $4^2) ) )
 
-if (object_id(IPL5[postX][postY]) ){
-       rconnect(PL5[preX][preY], IPL5[postX][postY], 0, $5, weight, delay, 0) }
+//if (object_id(IPL5[postX][postY]) ){
+//       rconnect(PL5[preX][preY], IPL5[postX][postY], 0, $5, weight, delay, 0) }
+       rconnect(type2gid(PL5_type, preX, preY), IPL5[postX][postY], 0, $5, weight, delay, 0)
 } } } } }
 
 proc IItoIL2(){ local preX, preY, postX, postY, distX, distY, distance, weight, delay
@@ -298,15 +315,16 @@ proc IItoIL2(){ local preX, preY, postX, postY, distX, distY, distance, weight, 
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(IPL2_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
     weight = $1 * exp( -(distance^2) / ( $2^2) )
     delay = $3 * 1 / (exp( -(distance^2) / ( $4^2) ) )
 
-if (object_id(IPL2[postX][postY]) ){
-       rconnect(PL2[preX][preY], IPL2[postX][postY], 0, $5, weight, delay, 0) }
+//if (object_id(IPL2[postX][postY]) ){
+//       rconnect(PL2[preX][preY], IPL2[postX][postY], 0, $5, weight, delay, 0) }
+       rconnect(type2gid(PL2_type, preX, preY), IPL2[postX][postY], 0, $5, weight, delay, 0)
 } } } } }
 
 proc IItoIL5(){ local preX, preY, postX, postY, distX, distY, distance, weight, delay
@@ -315,15 +333,16 @@ proc IItoIL5(){ local preX, preY, postX, postY, distX, distY, distance, weight, 
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if (cell_exist(IPL5_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
     weight = $1 * exp( -(distance^2) / ( $2^2) )
     delay = $3 * 1 / (exp( -(distance^2) / ( $4^2) ) )
 
-if (object_id(IPL5[postX][postY]) ){
-       rconnect(PL2[preX][preY], IPL5[postX][postY], 0, $5, weight, delay, 0) }
+//if (object_id(IPL5[postX][postY]) ){
+//       rconnect(PL2[preX][preY], IPL5[postX][postY], 0, $5, weight, delay, 0) }
+       rconnect(type2gid(PL2_type, preX, preY), IPL5[postX][postY], 0, $5, weight, delay, 0)
 } } } } }
 
 //////////////////////////////////////////////////////////////
@@ -364,12 +383,16 @@ d = new Random()  d.uniform($5,$6)
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD {
 if ((preX == postX) && (preY == postY)){
       weight = 0 delay = $5
 }else{weight=w.repick() delay=d.repick()}
 
-       rconnect(PL5[preX][preY], PL5[postX][postY], $3, $4, weight, delay,0) } } } } }
+//       rconnect(PL5[preX][preY], PL5[postX][postY], $3, $4, weight, delay,0)
+	if (cell_exist(PL5_type, postX, postY)) { //here because of repicks
+		rconnect(type2gid(PL5_type, preX, preY), PL5[postX][postY], $3, $4, weight, delay,0)
+	}
+} } } } }
 ////////////////
 proc U_VtoII(){ local preX, preY, postX, postY, weight, delay
 // Connects Layer V to Layer II/III Pyramidals
@@ -381,7 +404,11 @@ for preX=0,XD{
    for postY=0,YD{
                weight=w.repick() delay=d.repick()
 
-       rconnect(PL5[preX][preY], PL2[postX][postY], $3, $4, weight, delay, 0) } } } } }
+//       rconnect(PL5[preX][preY], PL2[postX][postY], $3, $4, weight, delay, 0)
+	if (cell_exist(PL2_type, postX, postY)) { // here because of repicks
+		rconnect(type2gid(PL5_type, preX, preY), PL2[postX][postY], $3, $4, weight, delay, 0)
+	}
+} } } } }
 //////////////////
 proc U_IItoII(){ local preX, preY, postX, postY, weight, delay
 // Connects Layer II/III to Layer II/III Pyramidals
@@ -395,7 +422,11 @@ if ((preX == postX) && (preY == postY)){
       weight = 0 delay = $5
 }else{weight=w.repick() delay=d.repick()}
 
-       rconnect(PL2[preX][preY], PL2[postX][postY], $3, $4, weight, delay,0) } } } } }
+//       rconnect(PL2[preX][preY], PL2[postX][postY], $3, $4, weight, delay,0)
+	if (cell_exist(PL2_type, postX, postY)) {
+		rconnect(type2gid(PL2_type, preX, preY), PL2[postX][postY], $3, $4, weight, delay,0)
+	}
+} } } } }
 ///////////////////
 proc U_IItoV(){ local preX, preY, postX, postY, weight, delay
 // Connects Layer II/III to Layer V Pyramidals
@@ -407,7 +438,11 @@ for preX=0,XD{
    for postY=0,YD{
                weight=w.repick() delay=d.repick()
 
-       rconnect(PL2[preX][preY], PL5[postX][postY], $3, $4, weight, delay, 0) } } } } }
+//       rconnect(PL2[preX][preY], PL5[postX][postY], $3, $4, weight, delay, 0)
+	if (cell_exist(PL5_type, postX, postY)) {
+		rconnect(type2gid(PL2_type, preX, preY), PL5[postX][postY], $3, $4, weight, delay, 0)
+	}
+} } } } }
 //////////////////
 
 /////////////////Inhibitory to Pyramidal connections //////////////////////////////////////////
@@ -423,8 +458,12 @@ for preX=0,XD{
    for postY=0,YD{
 weight=w.repick()
 delay=d.repick()
-if (object_id(IPL5[preX][preY]) ){
-rconnect(IPL5[preX][preY], PL5[postX][postY], $1, $2, weight, delay, 0)}  } } } } }
+//if (object_id(IPL5[preX][preY]) ){
+//rconnect(IPL5[preX][preY], PL5[postX][postY], $1, $2, weight, delay, 0)}
+	if (cell_exist(PL5_type, postX, postY)) {
+		rconnect(type2gid(IPL5_type, preX, preY), PL5[postX][postY], $1, $2, weight, delay, 0)
+	}
+} } } } }
 ////////
 proc U_IL2toV(){ local preX, preY, postX, postY, weight,delay
 // Connects *all* Layer II/III inhibitory cells to *all* Layer V Pyramidals
@@ -436,8 +475,12 @@ for preX=0,XD{
    for postY=0,YD{
 weight=w.repick()
 delay=d.repick()
-if (object_id(IPL2[preX][preY]) ){
-rconnect(IPL2[preX][preY], PL5[postX][postY], $1, $2, weight, delay, 0)}  } } } } }
+//if (object_id(IPL2[preX][preY]) ){
+//rconnect(IPL2[preX][preY], PL5[postX][postY], $1, $2, weight, delay, 0)}
+	if (cell_exist(PL5_type, postX, postY)) {
+		rconnect(type2gid(IPL2_type, preX, preY), PL5[postX][postY], $1, $2, weight, delay, 0)
+	}
+} } } } }
 ////////
 proc U_IL2toII(){ local preX, preY, postX, postY, weight,delay
 // Connects *all* Layer II/III inhibitory cells to *all* Layer II/III Pyramidals
@@ -449,8 +492,12 @@ for preX=0,XD{
    for postY=0,YD{
 weight=w.repick()
 delay=d.repick()
-if (object_id(IPL2[preX][preY]) ){
-rconnect(IPL2[preX][preY], PL2[postX][postY], $1, $2, weight, delay, 0)}  } } } } }
+//if (object_id(IPL2[preX][preY]) ){
+//rconnect(IPL2[preX][preY], PL2[postX][postY], $1, $2, weight, delay, 0)}
+	if (cell_exist(PL2_type, postX, postY)) {
+		rconnect(type2gid(IPL2_type, preX, preY), PL2[postX][postY], $1, $2, weight, delay, 0)
+	}
+} } } } }
 
 //////////////////////////////////////////
 // Inhibitory to Inhibitory Connections
@@ -468,8 +515,11 @@ if ((preX == postX) && (preY == postY)){
       weight = 0 delay = $5
 }else{weight=w.repick() delay=d.repick()}
 
-if ( object_id(IPL2[preX][preY]) && object_id(IPL2[postX][postY]) ){
-          rconnect(IPL2[preX][preY],IPL2[postX][postY],0,$5,weight,delay,0)}
+//if ( object_id(IPL2[preX][preY]) && object_id(IPL2[postX][postY]) ){
+//          rconnect(IPL2[preX][preY],IPL2[postX][postY],0,$5,weight,delay,0)}
+	if (cell_exist(IPL2_type, postX, postY)) {
+		rconnect(type2gid(IPL2_type, preX, preY),IPL2[postX][postY],0,$5,weight,delay,0)
+	}
 } } } } }
 ///////////
 proc U_IL5toIL5(){ local preX, preY, postX, postY,weight,delay
@@ -484,8 +534,11 @@ if ((preX == postX) && (preY == postY)){
       weight = 0 delay = $5
 }else{weight=w.repick() delay=d.repick()}
 
-if ( object_id(IPL5[preX][preY]) && object_id(IPL5[postX][postY]) ){
-          rconnect(IPL5[preX][preY],IPL5[postX][postY],0,$5,weight,delay,0)}
+//if ( object_id(IPL5[preX][preY]) && object_id(IPL5[postX][postY]) ){
+//          rconnect(IPL5[preX][preY],IPL5[postX][postY],0,$5,weight,delay,0)}
+	if (cell_exist(IPL5_type, postX, postY)) {
+		rconnect(type2gid(IPL5_type, preX, preY),IPL5[postX][postY],0,$5,weight,delay,0)
+	}
 } } } } }
 
 //////////////////////////////////////////
@@ -502,8 +555,11 @@ for preX=0,XD{
    for postY=0,YD{
 weight=w.repick()
 delay=d.repick()
-if ( object_id(IPL5[postX][postY]) ){
-rconnect(PL5[preX][preY], IPL5[postX][postY], 0, $3, weight, delay, 0) } 
+//if ( object_id(IPL5[postX][postY]) ){
+//rconnect(PL5[preX][preY], IPL5[postX][postY], 0, $3, weight, delay, 0) } 
+	if (cell_exist(IPL5_type, postX, postY)) {
+		rconnect(type2gid(PL5_type, preX, preY), IPL5[postX][postY], 0, $3, weight, delay, 0)
+	}
 } } } } }
 //////////
 proc U_IItoIL2(){ local preX, preY, postX, postY, weight, delay
@@ -516,8 +572,11 @@ for preX=0,XD{
    for postY=0,YD{
 weight=w.repick()
 delay=d.repick()
-if ( object_id(IPL2[postX][postY]) ){
-rconnect(PL2[preX][preY], IPL2[postX][postY], 0, $3, weight, delay, 0) } 
+//if ( object_id(IPL2[postX][postY]) ){
+//rconnect(PL2[preX][preY], IPL2[postX][postY], 0, $3, weight, delay, 0) } 
+	if (cell_exist(IPL2_type, postX, postY)) {
+		rconnect(type2gid(PL2_type, preX, preY), IPL2[postX][postY], 0, $3, weight, delay, 0)
+	}
 } } } } }
 //////////
 proc U_IItoIL5(){ local preX, preY, postX, postY, weight, delay
@@ -530,8 +589,11 @@ for preX=0,XD{
    for postY=0,YD{
 weight=w.repick()
 delay=d.repick()
-if ( object_id(IPL5[postX][postY]) ){
-rconnect(PL2[preX][preY], IPL5[postX][postY], 0, $3, weight, delay, 0) } 
+//if ( object_id(IPL5[postX][postY]) ){
+//rconnect(PL2[preX][preY], IPL5[postX][postY], 0, $3, weight, delay, 0) } 
+	if (cell_exist(IPL5_type, postX, postY)) {
+		rconnect(type2gid(PL2_type, preX, preY), IPL5[postX][postY], 0, $3, weight, delay, 0)
+	}
 } } } } }
 
 ////////Uniform Random Feed Connections//////////////////////////////////////////////////////
@@ -548,7 +610,11 @@ d = new Random()  d.uniform($5,$6)
         weight=w.repick()
         delay=d.repick()
 
-                rconnect($o7, PL5[postX][postY], $1, $2, weight, delay, 0) } } }
+//                rconnect($o7, PL5[postX][postY], $1, $2, weight, delay, 0)
+	if (cell_exist(PL5_type, postX, postY)) {
+		rconnect($7, PL5[postX][postY], $1, $2, weight, delay, 0)
+	}
+} } }
 /////////////
 proc UFeedtoII(){ local weight, delay, postX, postY
 // Uniform Random feed to Layer II/III pyramidals
@@ -562,7 +628,11 @@ d = new Random()  d.uniform($5,$6)
         weight=w.repick()
         delay=d.repick()
 
-                rconnect($o7, PL2[postX][postY], $1, $2, weight, delay, 0) } } }
+//                rconnect($o7, PL2[postX][postY], $1, $2, weight, delay, 0)
+	if (cell_exist(PL2_type, postX, postY)) {
+		rconnect($7, PL2[postX][postY], $1, $2, weight, delay, 0)
+	}
+} } }
 ////////////
 proc UFeedtoIL5(){ local weight, delay, postX, postY
 
@@ -578,8 +648,11 @@ d = new Random()  d.uniform($4,$5)
    for postY=0,YD{
         weight=w.repick()
         delay=d.repick()
-if (object_id(IPL5[postX][postY])   ){
-       rconnect($o6, IPL5[postX][postY], 0, $1, weight, delay, 0) }
+//if (object_id(IPL5[postX][postY])   ){
+//       rconnect($o6, IPL5[postX][postY], 0, $1, weight, delay, 0) }
+	if (cell_exist(IPL5_type, postX, postY)) {
+		rconnect($6, IPL5[postX][postY], 0, $1, weight, delay, 0)
+	}
 } } }
 /////////////
 proc UFeedtoIL2(){ local weight, delay, postX, postY
@@ -596,7 +669,10 @@ d = new Random()  d.uniform($4,$5)
    for postY=0,YD{
         weight=w.repick()
         delay=d.repick()
-if (object_id(IPL2[postX][postY])   ){
-       rconnect($o6, IPL2[postX][postY], 0, $1, weight, delay, 0) }
+//if (object_id(IPL2[postX][postY])   ){
+//       rconnect($o6, IPL2[postX][postY], 0, $1, weight, delay, 0) }
+	if (cell_exist(IPL2_type, postX, postY)) {
+		rconnect($6, IPL2[postX][postY], 0, $1, weight, delay, 0)
+	}
 } } }
 
