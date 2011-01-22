@@ -1,7 +1,6 @@
 // 2D init file
 X_DIM = 10 // number of Pyramidal cells along the X dimension 
 Y_DIM = 10 // number of Pyramidal cells along the Y dimension
-load_file("parlib.hoc")
 
 N_TYPE = 4 // number of cell types
 {load_file("parlib.hoc")} // create pc and all the parallel specific functions, etc.
