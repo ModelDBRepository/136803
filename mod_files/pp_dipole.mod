@@ -33,6 +33,7 @@ AFTER SOLVE {     	: solve for v's first then use them
 	ia=(pv-v)/ri
 	Q=ia*ztan
 	Qsum = Qsum + Q
+	Qtotal = Qtotal + Q
 }
 	
 AFTER INITIAL {

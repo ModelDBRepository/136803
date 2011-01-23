@@ -40,7 +40,7 @@ func gid2type() { local gid, x, type, ixd, jyd
 // only if cell exists
 //1or0 = cell_exist(type, ixd, jyd) {
 func cell_exist() {
-	return (pc.gid_exists(type2gid($1, $2, $3)) == 2)
+	return (pc.gid_exists(type2gid($1, $2, $3)) > 1)
 }
 
 // round robin iterator

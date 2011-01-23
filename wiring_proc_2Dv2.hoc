@@ -127,7 +127,7 @@ for preX=0,XD{
 if ((preX == postX) && (preY == postY)){weight = 0}
 
 //       rconnect(PL5[preX][preY], PL5[postX][postY], $3, $4, weight, delay, 0)
-       rconnect(type2gid(PL5_type, prex, preY), PL5[postX][postY], $3, $4, weight, delay, 0)
+       rconnect(type2gid(PL5_type, preX, preY), PL5[postX][postY], $3, $4, weight, delay, 0)
 } } } } }
 
 
