@@ -255,7 +255,7 @@ proc IL2toIL2(){ local preX, preY, postX, postY, distX, distY, distance, weight,
 for preX=0,XD{
  for preY=0,YD{
   for postX=0,XD{
-   for postY=0,YD{
+   for postY=0,YD if(cell_exist(IPL2_type, postX, postY)) {
     distX = abs(preX-postX)
     distY = abs(preY-postY)
     distance = sqrt(distX^2 + distY^2)
@@ -263,8 +263,9 @@ for preX=0,XD{
     delay = $3 * 1 / (exp( -(distance^2) / ( $4^2) ) )
 if ((preX == postX) && (preY == postY)){weight = 0}
 
-if ( object_id(IPL2[preX][preY]) && object_id(IPL2[postX][postY]) ){
-          rconnect(IPL2[preX][preY],IPL2[postX][postY],0,$5,weight,delay,0)}
+//if ( object_id(IPL2[preX][preY]) && object_id(IPL2[postX][postY]) ){
+//          rconnect(IPL2[preX][preY],IPL2[postX][postY],0,$5,weight,delay,0)}
+	rconnect(type2gid(IPL2_type, preX, preY),IPL2[postX][postY],0,$5,weight,delay,0)
 } } } } }
 
 proc IL5toIL5(){ local preX, preY, postX, postY, distX, distY, distance, weight, delay
