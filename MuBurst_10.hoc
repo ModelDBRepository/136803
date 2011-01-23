@@ -10,7 +10,7 @@ FF_type = 0
 FB_type = 1
 objref gidvecAlpha
 gidvecAlpha = new Vector()
-for (i=gidAlphabegin; i < gidAlphaend; i += pc.nhost) {
+for (i=gidAlphabegin+pc.id; i < gidAlphaend; i += pc.nhost) {
 	gidvecAlpha.append(i)
 	pc.set_gid2node(i, pc.id)
 }

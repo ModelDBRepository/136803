@@ -46,7 +46,7 @@ func cell_exist() {
 // round robin iterator
 // for pcitr(&gid) { ... }
 iterator pcitr() {local gid
-	for (gid = 0; gid < gid_end; gid += pc.nhost) {
+	for (gid = pc.id; gid < gid_end; gid += pc.nhost) {
 		$&1 = gid
 		// will generally have to check if the gid is really associated
 		// with a cell by checking the return value of pc.gid_exists(gid)
