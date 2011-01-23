@@ -201,7 +201,7 @@ NRUN = 1 // orig 26
 proc runonce(){local runtime
 //
 	runtime = startsw()
-	if (1) {
+	if (0) {
 init()
 while (t<tstop){
           fadvance()

@@ -50,5 +50,6 @@ AFTER INITIAL {
  }
  BEFORE BREAKPOINT {
 	Qsum = 0
+	Qtotal = 0
  }
 
