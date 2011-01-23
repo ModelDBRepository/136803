@@ -632,6 +632,18 @@ dL5 = dp
 return dp
 }
  
+func thishost_total_dipole(){ local dp, gid, last  localobj cell
+	dp=0
+	last = IPL2_type*X_DIM*Y_DIM
+	for pcitr(&gid) {
+		if (gid < last) {
+			cell = pc.gid2cell(gid)
+			forsec cell.all {dp += Qsum_dipole} 
+		}
+	}
+	return dp
+}
+ 
 dL2=0
 func L2_dipole(){ local dp
 dp=0

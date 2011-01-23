@@ -1,3 +1,4 @@
+begintime = startsw()
 // 2D init file
 X_DIM = 10 // number of Pyramidal cells along the X dimension 
 Y_DIM = 10 // number of Pyramidal cells along the Y dimension
@@ -181,33 +182,51 @@ tstop=10 // orig 1500
 dt=0.05
 // Number of runs
 NRUN = 1 // orig 26
-proc runonce(){
+proc runonce(){local runtime
 //
+	runtime = startsw()
 init()
+	dipole_record.resize(0)
+	t_record.resize(0)
 while (t<tstop){
           fadvance()
 
+	if (0) {
 // below put a '%f' for every data type defined
           fprint( "%f %f  \n", \
  t, \
  L2_dipole() + L5_dipole() ) // end print statement
+	}else{
+		record_thishost_total_dipole()
+	}
 }
+	// end of run print the total dipole
+	//calc_total_dipole()
+	if (pc.id == 0) {
+		print_total_dipole()
+	}
+	printf("runtime = %g\n", startsw() - runtime)
 } //end runonce()
 
 make_MuBursts(400)
 e_fffbx(0.00004,0.00004,5,1)
 
 proc runit(){ local i
-wopen("Mu_output.dat")
+if (pc.id == 0) wopen("Mu_output.dat")
 for i=0, NRUN-1{ runonce() //increments the evoked response starttime each run
 FF.pp.start = FF.pp.start + 3.85
 FB.pp.start = FB.pp.start + 3.85
 FF2.pp.start = FF2.pp.start + 3.85
 if (pc.id == 0) print(i)}
-wopen()
+if (pc.id == 0) wopen()
 }
 
+setuptime = startsw() - begintime
+if (pc.id == 0) printf("setuptime =  %g\n", setuptime)
 //
 runit()
 
 spikeout()
+
+finishtime = startsw() - begintime
+if (pc.id == 0) printf("finishtime = %g\n", finishtime)
