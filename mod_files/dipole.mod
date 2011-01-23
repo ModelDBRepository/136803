@@ -6,6 +6,7 @@ POINTER pv
 
 POINTER Qsum : for density. sums into Dipole at section position 1
 : RANGE Qsum : for POINT_PROCESS. Gets additions from dipole
+POINTER Qtotal : to allow Vector.record of the total dipole in a process
 }
 
 UNITS {
@@ -25,6 +26,7 @@ ASSIGNED {
 	ztan (um)
 	Q  (fAm)
 	Qsum (fAm) :human dipole order of 10nAm
+	Qtotal (fAm)
 }
 
 AFTER SOLVE {     	: solve for v's first then use them

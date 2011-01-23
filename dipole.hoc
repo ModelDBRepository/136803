@@ -1,5 +1,6 @@
 begintemplate DipoleForCell
 public bd, seclist, rotmat 
+external total_process_dipole
 //external fill_ztan
 objref bd,  seclist, point, rotmat //rotmat is incase I want a rotation matx
 
@@ -26,6 +27,7 @@ proc setup_dipole() { local i, j, x, xold  localobj d
 		j += 1
 		d.ri=ri(1)
 		setpointer d.pv,v(0.999)	
+		setpointer d.Qtotal, total_process_dipole
 		i += 1
 		//ri_dipole below is non branch point 
 		//dipoles via density mechanisms
@@ -34,6 +36,7 @@ proc setup_dipole() { local i, j, x, xold  localobj d
 			ri_dipole(x)=ri(x) // ri avail for use: diameters taken 
 			setpointer pv_dipole(x),v(xold) //points pv to parent 
 			setpointer Qsum_dipole(x), d.Qsum
+			setpointer Qtotal_dipole(x), total_process_dipole
 			xold=x
 		}
 	}

@@ -106,13 +106,11 @@ proc spikeout() {local rank, i  localobj f
 	pc.barrier()
 }
 
+total_process_dipole = 0
 objref dipole_record, t_record
 dipole_record = new Vector()
 t_record = new Vector()
-proc record_thishost_total_dipole() {
-	t_record.append(t)
-	dipole_record.append(thishost_total_dipole())
-}
+
 proc calc_total_dipole() {
 	// need to do a reduce sum on all the dipole_record
 	pc.allreduce(dipole_record, 1)
@@ -125,3 +123,10 @@ proc print_total_dipole() {local i
 	}
 }
 
+proc psolve() {
+	t_record.record(&t)
+	dipole_record.record(&total_process_dipole)
+	pc.set_maxstep(10)
+	init()
+	pc.psolve($1)
+}

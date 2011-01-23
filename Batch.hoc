@@ -139,23 +139,28 @@ finitialize(-64.9737) // initialize all cells to Inhibitory rest potential
 for i=0,XD{
 for j=0,YD{
  v2num=0 Vnum=0 
+	 if (cell_exist(PL5_type, i, j)) {
  PL5[i][j].soma {v=-70.197014 m_ar=0.29453859 h_cat=0.079413855 m_cat=0.091981604\
     h_hh=0.75925494 m_hh=0.028240063 n_hh=0.24191157 n_km=0.011362846 h_ca=0.63961253\
     m_ca=3.8876755e-05 n_kca=4.9998916e-05 cai=0.00010000285}
- PL2[i][j].soma {v=-71.462514 n_km=0.0098896622}
  PL5[i][j].soma distance()
  forsec PL5[i][j].dendritic for(x,0){v=PL5rest.x(Vnum) m_ar=MAR.x(Vnum)\
   h_cat=HCAT.x(Vnum) m_cat=MCAT.x(Vnum) h_ca=HCA.x(Vnum) m_ca=MCA.x(Vnum)\
   h_hh=HHH.x(Vnum) m_hh=MHH.x(Vnum) n_hh=NHH.x(Vnum) n_kca=NKCA.x(Vnum)\
-  n_km=NKM.x(Vnum) Qsum_dipole=PL5_DPL.x(Vnum) Q_dipole=PL5_Q.x(Vnum) cai=PL5CAI.x(Vnum) Vnum=Vnum+1}
+  n_km=NKM.x(Vnum) Qsum_dipole=PL5_DPL.x(Vnum) Q_dipole=PL5_Q.x(Vnum) cai=PL5CAI.x(Vnum)
+  Vnum=Vnum+1}
 //
 // dend[5] not properly set by above ???
   PL5[i][j].dend[5].v = -70.22481
-
+	}
 //
 // Initialize Layer II Pyramidal 
+	if (cell_exist(PL2_type, i, j)) {
+ PL2[i][j].soma {v=-71.462514 n_km=0.0098896622}
    PL2[i][j].soma distance()
-   forsec PL2[i][j].dendritic for(x,0){v=PL2rest.x(v2num) Qsum_dipole=PL2_DPL.x(v2num) v2num=v2num+1}
+   forsec PL2[i][j].dendritic for(x,0){v=PL2rest.x(v2num) Qsum_dipole=PL2_DPL.x(v2num)
+    v2num=v2num+1}
+	}
 } }
 // if (cvode.active()) {cvode.re_init() }else {fcurrent()}
 fcurrent()
@@ -185,25 +190,23 @@ NRUN = 1 // orig 26
 proc runonce(){local runtime
 //
 	runtime = startsw()
+	if (0) {
 init()
-	dipole_record.resize(0)
-	t_record.resize(0)
 while (t<tstop){
           fadvance()
 
-	if (0) {
 // below put a '%f' for every data type defined
           fprint( "%f %f  \n", \
  t, \
  L2_dipole() + L5_dipole() ) // end print statement
-	}else{
-		record_thishost_total_dipole()
-	}
 }
-	// end of run print the total dipole
-	calc_total_dipole()
-	if (pc.id == 0) {
-		print_total_dipole()
+	}else{
+		psolve(tstop)
+		// end of run print the total dipole
+		calc_total_dipole()
+		if (pc.id == 0) {
+			print_total_dipole()
+		}
 	}
 	printf("runtime = %g\n", startsw() - runtime)
 } //end runonce()

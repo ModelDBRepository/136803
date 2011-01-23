@@ -6,6 +6,7 @@ POINTER pv
 
 : POINTER Qsum : for density. sums into Dipole at section position 1
 RANGE Qsum : for POINT_PROCESS. Gets additions from dipole
+POINTER Qtotal : to allow Vector record of total in a process
 }
 
 UNITS {
@@ -25,6 +26,7 @@ ASSIGNED {
 	ztan (um)
 	Q  (fAm)
 	Qsum (fAm)
+	Qtotal (fAm)
 }
 
 AFTER SOLVE {     	: solve for v's first then use them
@@ -37,11 +39,13 @@ AFTER INITIAL {
 	ia=(pv-v)/ri
 	Q=ia*ztan
 	Qsum = Qsum + Q
+	Qtotal = Qtotal + Q
 }
 
 : following needed for POINT_PROCESS only but will work if also in SUFFIX
  BEFORE INITIAL {
 	Qsum = 0
+	Qtotal = 0
  }
  BEFORE BREAKPOINT {
 	Qsum = 0
