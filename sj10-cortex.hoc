@@ -616,9 +616,9 @@ dipoleL5 = new List()
 dipoleL2 = new List()
 
 for i=0,XD{
-for j=0,YD{
- PL5[i][j].soma dipoleL5.append(new DipoleForCell() )
- PL2[i][j].soma dipoleL2.append(new DipoleForCell() )
+for j=0,YD {
+ if (cell_exist(PL5_type, i, j)) PL5[i][j].soma dipoleL5.append(new DipoleForCell() )
+ if (cell_exist(PL2_type, i, j)) PL2[i][j].soma dipoleL2.append(new DipoleForCell() )
 } }
 
 dL5=0

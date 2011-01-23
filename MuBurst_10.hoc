@@ -72,7 +72,8 @@ for i=130,139 aff(i,1350,$1) //{AlphaFF[i].pp.start= GaussRand.normal(1350,$1)}
 for i=140,149 aff(i,1450,$1) //{AlphaFF[i].pp.start= GaussRand.normal(1450,$1)}
 //// Feedback
 for i=0,149{ 
-	gid = alphagid(FB_type, i) {
+	gid = alphagid(FB_type, i)
+	if (pc.gid_exists(gid)) {
 AlphaFB[i] = new FeedX()
 AlphaFB[i].pp.noise=0
 AlphaFB[i].pp.number=2 //THIS IS STILL 2 - CHANGE IT?
@@ -81,7 +82,6 @@ AlphaFB[i].pp.start = 50
 		pc.cell(gid, new NetCon(AlphaFB[i].pp, nil))
 	}
 }
-
 for i=0,9 if (pc.gid_exists(alphagid(FB_type, i))) {AlphaFB[i].pp.number = 0} // Not Used// Start at 150ms.
 
 for i=10,19 afb(i,150,$1) //{AlphaFB[i].pp.start=GaussRand.normal(150,$1)}

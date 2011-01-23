@@ -201,7 +201,7 @@ while (t<tstop){
 	}
 }
 	// end of run print the total dipole
-	//calc_total_dipole()
+	calc_total_dipole()
 	if (pc.id == 0) {
 		print_total_dipole()
 	}
@@ -230,3 +230,10 @@ spikeout()
 
 finishtime = startsw() - begintime
 if (pc.id == 0) printf("finishtime = %g\n", finishtime)
+
+if (pc.nhost > 0) {
+	pc.runworker(0)
+	pc.done()
+	quit()
+}
+
