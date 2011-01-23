@@ -95,7 +95,7 @@ proc spikeout() {local rank, i  localobj f
 	if (pc.id == 0) { f.wopen()  f.close() }
 	for rank = 0, pc.nhost-1 {
 		pc.barrier()
-		if (rank = pc.id) {
+		if (rank == pc.id) {
 			f.aopen()
 			for i=0, idvec.size-1 {
 				f.printf("%.3f %d\n", spikevec.x[i], idvec.x[i])

@@ -208,7 +208,7 @@ while (t<tstop){
 			print_total_dipole()
 		}
 	}
-	printf("runtime = %g\n", startsw() - runtime)
+	if (pc.id == 0) printf("runtime = %g\n", startsw() - runtime)
 } //end runonce()
 
 make_MuBursts(400)
@@ -235,7 +235,7 @@ finishtime = startsw() - begintime
 if (pc.id == 0) printf("finishtime = %g\n", finishtime)
 
 if (pc.nhost > 0) {
-	pc.runworker(0)
+	pc.runworker()
 	pc.done()
 	quit()
 }
