@@ -83,6 +83,8 @@ objref spikevec, idvec
 proc want_all_spikes() {local gid
 	spikevec = new Vector(10000)
 	idvec = new Vector(10000)
+	spikevec.resize(0)
+	idvec.resize(0)	
 	for pcitr(&gid) {
 		if (pc.gid_exists(gid) == 2) {
 			pc.spike_record(gid, spikevec, idvec)

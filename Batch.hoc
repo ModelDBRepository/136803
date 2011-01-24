@@ -228,9 +228,11 @@ e_fffbx(0.00004,0.00004,5,1)
 proc runit(){ local i
 if (pc.id == 0) wopen("Mu_output.dat")
 for i=0, NRUN-1{ runonce() //increments the evoked response starttime each run
+if (pc.id == 0) {
 FF.pp.start = FF.pp.start + 3.85
 FB.pp.start = FB.pp.start + 3.85
 FF2.pp.start = FF2.pp.start + 3.85
+}
 if (pc.id == 0) print(i)}
 if (pc.id == 0) wopen()
 }
