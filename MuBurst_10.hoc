@@ -25,14 +25,14 @@ GaussRand=new Random()
 proc aff() {local r
 	r = GaussRand.normal($2, $3)
 	if (pc.gid_exists(alphagid(FF_type, $1))) {
-		AlphaFF[$1].pp.start = r
+		AlphaFF[$1].pp.start = r - stim_delay_offset
 	}
 }
 
 proc afb() {local r
 	r = GaussRand.normal($2, $3)
 	if (pc.gid_exists(alphagid(FB_type, $1))) {
-		AlphaFB[$1].pp.start = r
+		AlphaFB[$1].pp.start = r - stim_delay_offset
 	}
 }
 

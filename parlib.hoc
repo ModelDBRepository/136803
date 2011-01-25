@@ -85,10 +85,21 @@ proc want_all_spikes() {local gid
 	idvec = new Vector(10000)
 	spikevec.resize(0)
 	idvec.resize(0)	
+	// real cells
 	for pcitr(&gid) {
 		if (pc.gid_exists(gid) == 2) {
 			pc.spike_record(gid, spikevec, idvec)
 		}
+	}
+	// AlphaFF and AlphaFB --- see MuBurst_10.hoc
+	for (gid = gidAlphabegin+pc.id; i < gidAlphaend; i += pc.nhost) {
+		pc.spike_record(gid, spikevec, idvec)
+	}
+	// FF, FB, FF2
+	if (pc.id == 0) {
+		pc.spike_record(FFgid, spikevec, idvec)
+		pc.spike_record(FBgid, spikevec, idvec)
+		pc.spike_record(FF2gid, spikevec, idvec)
 	}
 }
 

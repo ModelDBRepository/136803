@@ -6,6 +6,7 @@ Y_DIM = 10 // number of Pyramidal cells along the Y dimension
 N_TYPE = 4 // number of cell types
 {load_file("parlib.hoc")} // create pc and all the parallel specific functions, etc.
 declare_gids()
+stim_delay_offset = 1
 
 Tfactor=0.0002
 Ttau=0.0
@@ -16,7 +17,6 @@ FSx=4 // Coordinates for *all* feeds
 FSy=4
 
 {load_file("sj10-cortex.hoc")}
-want_all_spikes()
 {load_file("wiring_proc_2Dv2.hoc")}
 
 /*
@@ -168,20 +168,20 @@ frecord_init()
 }
 /////////////////////////////////////////////////////////////
 // Define the evoked signal with initial start times
-FFgid = 1+1e8
-FBgid = 2+1e8
-FF2gid = 3+1e8
+FFgid = 1+gidAlphaend
+FBgid = 2+gidAlphaend
+FF2gid = 3+gidAlphaend
 objref  FF, FB, FF2
 if (pc.id == 0) {
 FF = new FeedX() // Thalamic input (Feed-forward) 
 FF.pp.number=1
-FF.pp.start=454
+FF.pp.start=454 - stim_delay_offset
 FB = new FeedX() // Feed-Back (eg. Pre-frontal input) 
 FB.pp.number=1
-FB.pp.start=499
+FB.pp.start=499 - stim_delay_offset
 FF2 = new FeedX() // Thalamic input (Feed-forward) 
 FF2.pp.number=1
-FF2.pp.start=564
+FF2.pp.start=564 - stim_delay_offset
 pc.set_gid2node(FFgid, pc.id)
 pc.set_gid2node(FBgid, pc.id)
 pc.set_gid2node(FF2gid, pc.id)
@@ -193,7 +193,7 @@ pc.cell(FF2gid, new NetCon(FF2.pp, nil))
 {load_file("scale_ep_thresh.hoc")}
 ///////////////////////////////////////////////////////////////
 //Total time for one run
-tstop=10 // orig 1500
+tstop=1500 // orig 1500
 // time increment
 dt=0.05
 // Number of runs
@@ -240,6 +240,9 @@ if (pc.id == 0) wopen()
 setuptime = startsw() - begintime
 if (pc.id == 0) printf("setuptime =  %g\n", setuptime)
 //
+
+want_all_spikes()
+
 runit()
 
 spikeout()
