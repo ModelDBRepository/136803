@@ -87,7 +87,7 @@ proc want_all_spikes() {local gid
 	idvec.resize(0)	
 	// real cells
 	for pcitr(&gid) {
-		if (pc.gid_exists(gid) == 2) {
+		if (pc.gid_exists(gid) > 1) {
 			pc.spike_record(gid, spikevec, idvec)
 		}
 	}
