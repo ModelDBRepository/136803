@@ -528,7 +528,7 @@ proc rconnect(){
 // weight, delay, threshold )
 // rtype= 0=AMPA ||| 1=NMDA ||| 2=GABAa ||| 3= GABAb
 // -----------------------------------------------------------------------
-	if ($6 == 0 && $1 >= gid_end) { $6 = stim_delay_offset }
+	if ($1 >= gid_end) { $6 += stim_delay_offset }
 	if (pc.gid_exists($1) == 1) { return } // owned but no associated cell
 if ( $4 == 0){ //$o1.connect2target($o2.ampa[$3].s, netcon)
 	netcon = pc.gid_connect($1, $o2.ampa[$3].s)
