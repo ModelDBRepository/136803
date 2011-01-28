@@ -250,7 +250,7 @@ spikeout()
 finishtime = startsw() - begintime
 if (pc.id == 0) printf("finishtime = %g\n", finishtime)
 
-if (pc.nhost > 0) {
+if (pc.nhost > 1) {
 	pc.runworker()
 	pc.done()
 	quit()
