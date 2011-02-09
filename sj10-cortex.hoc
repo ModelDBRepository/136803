@@ -559,8 +559,10 @@ for i=0,XD{
 for j=0,YD{
 PL5[i][j] = new Layer5_pyr()
 PL5[i][j].position(i*100,0,j*100)
+want_spike(PL5[i][j], PL5_type, i, j)
 PL2[i][j] = new Layer2_pyr()
 PL2[i][j].position(i*100,535,j*100)
+want_spike(PL2[i][j], PL2_type, i, j)
 } }
 
 //
@@ -577,7 +579,9 @@ proc create_inhib(){local x, y
 for y=0,YD{
 for x=$1,XD{
 IPL2[x][y] = new Inhib()
+want_spike(IPL2[x][y], IPL2_type, x, y)
 IPL5[x][y] = new Inhib()
+want_spike(IPL5[x][y], IPL5_type, x, y)
 x=x+$2 }
 } }
 
@@ -594,7 +598,9 @@ offset = 0
 for y=0,YD{
 for x=offset,XD{
 IPL2[x][y] = new Inhib()
+want_spike(IPL2[x][y], IPL2_type, x, y)
 IPL5[x][y] = new Inhib()
+want_spike(IPL5[x][y], IPL5_type, x, y)
 x=x+$1 }
 if (offset==0) {offset=1} else {offset=0}
 } }

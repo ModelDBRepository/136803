@@ -2,6 +2,9 @@
 X_DIM = 10 // number of Pyramidal cells along the X dimension 
 Y_DIM = 10 // number of Pyramidal cells along the Y dimension
 
+N_TYPE = 4 // number of cell types 
+{load_file("serial_parlib.hoc")} // allow recording spikes in serial version similar to parlib.hoc
+
 Tfactor=0.0002
 Ttau=0.0
 Hfactor=0.000001
@@ -170,11 +173,11 @@ FF2.pp.start=564
 load_file("scale_ep_thresh.hoc")
 ///////////////////////////////////////////////////////////////
 //Total time for one run
-tstop=1500
+tstop=40 // 1500
 // time increment
 dt=0.05
 // Number of runs
-NRUN = 26
+NRUN = 1 // 26
 proc runonce(){
 //
 init()
@@ -202,6 +205,7 @@ wopen()
 }
 
 //
+xopen("energize.hoc") // moves stim. to before 15 ms and strengthens weights by 10
 runit()
 
 

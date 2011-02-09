@@ -1,0 +1,9 @@
+objref xxx
+
+xxx = new List("NetStim")
+for i=0, xxx.count-1 xxx.o(i).start /=100
+
+xxx = new List("NetCon")
+for i=0, xxx.count-1 if (xxx.o(i).syn.e > -10) xxx.o(i).weight *= 10
+
+
