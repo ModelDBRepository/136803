@@ -207,5 +207,7 @@ wopen()
 //
 xopen("energize.hoc") // moves stim. to before 15 ms and strengthens weights by 10
 runit()
+spikeout()
+
 
 

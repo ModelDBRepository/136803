@@ -1,6 +1,6 @@
 // serial_parlib.hoc
 // is a serial version of the parlib.hoc parallel library file
-// intended to create gid's for the serial version solely for netcon event recording
+// intended to track gid's for the serial version solely for netcon event recording
 // that will allow comparison with the parallel versions's spike recording
 
 objref nil
@@ -29,96 +29,29 @@ func type2gid() {local type, ixd, jyd, gid
 	return gid
 }
 
-//type = gid2type(gid, &ixd, &jyd)
-func gid2type() { local gid, x, type, ixd, jyd
-	gid = $1
-	jyd = gid%Y_DIM
-	x = (gid - jyd)/Y_DIM
-	ixd = x%X_DIM
-	type = (x - ixd)/X_DIM
-	$&2 = ixd
-	$&3 = jyd
-	return type
-}
+// sprinkle want_spike(cell, type, ixd, jyd)
+// whereever the serial code creates cells
 
-//cell = cell_create("create statement", type, iXD, jYD)
-// assumes gid exists
-objref tmpcell
-obfunc create_cell() { local gid   localobj cell, nc, nil, s
-	gid = type2gid($2, $3, $4)
-	if (pc.gid_exists(gid)) {
-		s = new String()
-		sprint(s.s, "tmpcell = %s", $s1)	
-		execute(s.s)
-		tmpcell.connect2target(nil, nc)
-		pc.cell(gid, nc)
-		cell = tmpcell
-		tmpcell = nil
-	}
-	return cell
-}
-
-objref spikevec, idvec
-proc want_all_spikes() {local gid
-	spikevec = new Vector(10000)
-	idvec = new Vector(10000)
-	spikevec.resize(0)
-	idvec.resize(0)	
-	// real cells
-	for pcitr(&gid) {
-		if (pc.gid_exists(gid) > 1) {
-			pc.spike_record(gid, spikevec, idvec)
-		}
-	}
-	// AlphaFF and AlphaFB --- see MuBurst_10.hoc
-	for (gid = gidAlphabegin+pc.id; i < gidAlphaend; i += pc.nhost) {
-		pc.spike_record(gid, spikevec, idvec)
-	}
-	// FF, FB, FF2
-	if (pc.id == 0) {
-		pc.spike_record(FFgid, spikevec, idvec)
-		pc.spike_record(FBgid, spikevec, idvec)
-		pc.spike_record(FF2gid, spikevec, idvec)
-	}
+objref tvec, idvec
+tvec = new Vector()
+idvec=new Vector()
+proc want_spike() {localobj nc, nil
+  if ($2 < 2) {  // type pyr's have soma and the inhib's have cell as section name to watch
+	$o1.soma nc = new NetCon(&v(0.5), nil)
+  } else {
+	$o1.cell nc = new NetCon(&v(0.5), nil)
+  }
+//   $o1.connect2target(nil, nc)
+  nc.record(tvec, idvec, type2gid($2, $3, $4))
 }
 
 proc spikeout() {local rank, i  localobj f
 	f = new File("out.dat")
-	if (pc.id == 0) { f.wopen()  f.close() }
-	for rank = 0, pc.nhost-1 {
-		pc.barrier()
-		if (rank == pc.id) {
-			f.aopen()
-			for i=0, idvec.size-1 {
-				f.printf("%.3f %d\n", spikevec.x[i], idvec.x[i])
-			}
-			f.close()
+	f.aopen()
+	for i=0, idvec.size-1 {
+		f.printf("%.3f %d\n", tvec.x[i], idvec.x[i])
 		}
-	}
-	pc.barrier()
+	f.close()
 }
 
-total_process_dipole = 0
-objref dipole_record, t_record
-dipole_record = new Vector()
-t_record = new Vector()
 
-proc calc_total_dipole() {
-	// need to do a reduce sum on all the dipole_record
-	pc.allreduce(dipole_record, 1)
-}
-proc print_total_dipole() {local i
-	if (pc.id == 0) {
-		for i=0, t_record.size-1 {
-			fprint("%f %f  \n", t_record.x[i], dipole_record.x[i])
-		}
-	}
-}
-
-proc psolve() {
-	t_record.record(&t)
-	dipole_record.record(&total_process_dipole)
-	pc.set_maxstep(10)
-	init()
-	pc.psolve($1)
-}
