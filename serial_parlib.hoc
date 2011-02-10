@@ -21,11 +21,24 @@ PL5_type = 0
 PL2_type = 1
 IPL2_type = 2
 IPL5_type = 3
+N_ALPHA = 150
+FF_type = 4
+FB_type = 5
+gidAlphabegin = 400
+FFgid = 701
+FBgid = 702
+FF2gid = 703
 
 //gid = type2gid(type, ixd, jyd)
 func type2gid() {local type, ixd, jyd, gid
 	type = $1  ixd = $2  jyd = $3
-	gid = type * X_DIM * Y_DIM  +  ixd * Y_DIM + jyd
+	if (type < FF_type) {
+		gid = type * X_DIM * Y_DIM  +  ixd * Y_DIM + jyd
+	}else if (type <= FB_type) {
+		gid = gidAlphabegin + (type - FF_type)*N_ALPHA + ixd
+	}else{
+		gid = type
+	}
 	return gid
 }
 
