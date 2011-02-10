@@ -92,7 +92,7 @@ proc want_all_spikes() {local gid
 		}
 	}
 	// AlphaFF and AlphaFB --- see MuBurst_10.hoc
-	for (gid = gidAlphabegin+pc.id; i < gidAlphaend; i += pc.nhost) {
+	for (gid = gidAlphabegin+pc.id; gid < gidAlphaend; gid += pc.nhost) {
 		pc.spike_record(gid, spikevec, idvec)
 	}
 	// FF, FB, FF2
