@@ -49,12 +49,12 @@ objref tvec, idvec
 tvec = new Vector()
 idvec=new Vector()
 proc want_spike() {localobj nc, nil
-  if ($2 < 2) {  // type pyr's have soma and the inhib's have cell as section name to watch
-	$o1.soma nc = new NetCon(&v(0.5), nil)
-  } else {
-	$o1.cell nc = new NetCon(&v(0.5), nil)
-  }
-//   $o1.connect2target(nil, nc)
+//  if ($2 < 2) {  // type pyr's have soma and the inhib's have cell as section name to watch
+//	$o1.soma nc = new NetCon(&v(0.5), nil)
+//  } else {
+//	$o1.cell nc = new NetCon(&v(0.5), nil)
+//  }
+   $o1.connect2target(nil, nc)
   nc.record(tvec, idvec, type2gid($2, $3, $4))
 }
 

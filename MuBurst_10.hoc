@@ -8,6 +8,7 @@ proc make_MuBursts(){local i
 // // Feed-Forward
 for i=0,149{ 
 AlphaFF[i] = new FeedX()
+want_spike(AlphaFF[i], FF_type, i, 0)
 AlphaFF[i].pp.noise=0AlphaFF[i].pp.number=2 //CHANGED THIS!!
 AlphaFF[i].pp.interval = 10
 AlphaFF[i].pp.start = 50
@@ -27,6 +28,7 @@ for i=90,99{AlphaFF[i].pp.start= GaussRand.normal(950,$1)}for i=100,109{AlphaFF[
 //// Feedback
 for i=0,149{ 
 AlphaFB[i] = new FeedX()
+want_spike(AlphaFB[i], FB_type, i, 0)
 AlphaFB[i].pp.noise=0AlphaFB[i].pp.number=2 //THIS IS STILL 2 - CHANGE IT?
 AlphaFB[i].pp.interval = 10
 AlphaFB[i].pp.start = 50

@@ -161,12 +161,15 @@ frecord_init()
 // Define the evoked signal with initial start times
 objref  FF, FB, FF2
 FF = new FeedX() // Thalamic input (Feed-forward) 
+want_spike(FF, FFgid, 0, 0)
 FF.pp.number=1
 FF.pp.start=454
 FB = new FeedX() // Feed-Back (eg. Pre-frontal input) 
+want_spike(FB, FBgid, 0, 0)
 FB.pp.number=1
 FB.pp.start=499
 FF2 = new FeedX() // Thalamic input (Feed-forward) 
+want_spike(FF2, FF2gid, 0, 0)
 FF2.pp.number=1
 FF2.pp.start=564
 // and connect it
