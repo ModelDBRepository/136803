@@ -176,7 +176,7 @@ FF2.pp.start=564
 load_file("scale_ep_thresh.hoc")
 ///////////////////////////////////////////////////////////////
 //Total time for one run
-tstop=40 // 1500
+tstop=1500
 // time increment
 dt=0.05
 // Number of runs
@@ -207,8 +207,6 @@ print(i)}
 wopen()
 }
 
-//
-xopen("energize.hoc") // moves stim. to before 15 ms and strengthens weights by 10
 runit()
 spikeout()
 
