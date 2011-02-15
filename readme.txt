@@ -79,5 +79,23 @@ Folder: STATES
 Contains data files for all of the initial conditions. 
 
 Folder: mod_files
-The .mod files and .inc files (these are included in mod files via the
-INCLUDE keyword) used.
+The .mod files.  In addition the default hh mechanism is used.
+
+Usage instructions:
+This version of the model was parallelized by Michael Hines and
+configured to run Check the NEURON version (the message that neuron
+outputs when you start nrniv). My version for example says NEURON --
+VERSION 7.2 (499:91db257165c4) 2011-01-25 and it is the number before
+the colon (499 as above or greater is sufficient).
+
+After unzipping the attached file (on the parallel cluster master) and
+cd'ing to the created folder compile the mod files with the command
+
+nrnivmodl mod_files
+
+and then type
+
+mpirun -n 4 nrniv -mpi Batch.hoc
+
+replacing the 4 above with a number of processors that you have
+available.

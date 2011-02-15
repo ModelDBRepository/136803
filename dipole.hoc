@@ -73,7 +73,3 @@ proc fill_ztan() {local i, j, x  localobj xvec, z3dvec, a3dvec, d
 
 
 endtemplate DipoleForCell
-
-
-
-

@@ -1,3 +1,12 @@
+//moddir mod_files
+load_file("nrngui.hoc")
+
+print "This copy of Batch.hoc allows the model to be auto-launched"
+print "from ModelDB.  This version however stops after one time step"
+print "and allows the exploration of the model through the NEURON"
+print "gui interface.  For example see Tools -> Model View, or use"
+print "Tools -> RunControl to further run the model."
+
 begintime = startsw()
 // 2D init file
 X_DIM = 10 // number of Pyramidal cells along the X dimension 
@@ -193,7 +202,7 @@ pc.cell(FF2gid, new NetCon(FF2.pp, nil))
 {load_file("scale_ep_thresh.hoc")}
 ///////////////////////////////////////////////////////////////
 //Total time for one run
-tstop=1500
+tstop=0.05 // 1500
 // time increment
 dt=0.05
 // Number of runs
