@@ -9,7 +9,7 @@ These files were contributed by Stephanie Jones.
 Here is a description of the files:
 
 File: sj10-cortex.hoc
-Creates cells and network (grid of layer 5 and layer 2/3 cells – 100
+Creates cells and network (grid of layer 5 and layer 2/3 cells - 100
 pyramidal neurons and 35 interneurons in each layer).
 
 Contains templates for multi-compartment Layer 5 and Layer 2/3
@@ -82,11 +82,11 @@ Folder: mod_files
 The .mod files.  In addition the default hh mechanism is used.
 
 Usage instructions:
-This version of the model was parallelized by Michael Hines and
-configured to run Check the NEURON version (the message that neuron
-outputs when you start nrniv). My version for example says NEURON --
-VERSION 7.2 (499:91db257165c4) 2011-01-25 and it is the number before
-the colon (499 as above or greater is sufficient).
+This version of the model was parallelized by Michael Hines.  Please
+check your NEURON version (the message that neuron outputs when
+started).  For example, running nrniv might display NEURON -- VERSION
+7.2 (499:91db257165c4) 2011-01-25.  The number before the colon needs
+to be greater than or equal to 499 as above.
 
 After unzipping the attached file (on the parallel cluster master) and
 cd'ing to the created folder compile the mod files with the command
