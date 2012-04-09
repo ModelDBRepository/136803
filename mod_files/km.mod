@@ -71,7 +71,7 @@ INITIAL {
 }
 
 BREAKPOINT {
-        SOLVE states METHOD euler
+        SOLVE states METHOD cnexp
 	gk = tadj*gbar*n
 	ik = (1e-4) * gk * (v - ek)
 } 

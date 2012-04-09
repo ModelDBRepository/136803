@@ -31,7 +31,7 @@ STATE {
 	m
 }
 BREAKPOINT { 
-	SOLVE states METHOD euler
+	SOLVE states METHOD cnexp
 	i = gbar * m * ( v - erev ) 
 } 
 INITIAL { 

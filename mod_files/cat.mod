@@ -35,7 +35,7 @@ STATE {
 }
 
 BREAKPOINT { 
-	SOLVE states METHOD euler
+	SOLVE states METHOD cnexp
 	i = gbar * m * m * h * ( v - 125 ) 
 }
  

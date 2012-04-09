@@ -71,7 +71,7 @@ INITIAL {
 }
 
 BREAKPOINT {
-        SOLVE states METHOD euler
+        SOLVE states METHOD cnexp
         gca = tadj*gbar*m*m*h
 	ica = (1e-4) * gca * (v - eca)
 } 

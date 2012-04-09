@@ -99,3 +99,7 @@ mpirun -n 4 nrniv -mpi Batch.hoc
 
 replacing the 4 above with a number of processors that you have
 available.
+
+20120409 euler method updated to cnexp in km.mod, kca.mod, cat.mod,
+ca.mod, and ar.mod; and updated to derivimplicit in cad.mod as per
+http://www.neuron.yale.edu/phpBB/viewtopic.php?f=28&t=592
